@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <generator uri="http://jekyllrb.com" version="4.1.1">Jekyll</generator>
+  
+  
+  <link href="https://keremzaman.github.io/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://keremzaman.github.io/" rel="alternate" type="text/html" hreflang="en" />
+  <updated>2020-10-13T22:45:54+00:00</updated>
+  <id>https://keremzaman.github.io//</id>
+
+  
+    <title type="html">Kerem Zaman’s blog</title>
+  
+
+  
+    <subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle>
+  
+
+  
+    <author>
+        <name>Kerem Zaman</name>
+      
+      
+    </author>
+  
+
+  
+  
+    <entry>
+      
+      <title type="html">Role of the Target Mask during Transformer Training</title>
+      
+      
+      <link href="https://keremzaman.github.io/2020/10/12/role-of-the-target-mask-during-transformer-training/" rel="alternate" type="text/html" title="Role of the Target Mask during Transformer Training" />
+      
+      <published>2020-10-12T03:10:56+00:00</published>
+      <updated>2020-10-12T03:10:56+00:00</updated>
+      <id>https://keremzaman.github.io/2020/10/12/role-of-the-target-mask-during-transformer-training</id>
+      <content type="html" xml:base="https://keremzaman.github.io/2020/10/12/role-of-the-target-mask-during-transformer-training/">&lt;style type=&quot;text/css&quot;&gt;
+.circle:before {
+  content: ' \25CF';
+  font-size: 40px;
+}
+&lt;/style&gt;
+
+&lt;p&gt;While transformers have been becoming increasingly popular across different domains, there are still points which aren’t emphasized enough. One of those points is how the target mask given to the transformer decoder behaves in the training phase of the network. I’ll try to 
+explain its behavior with a visual intuition.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Unlike RNNs, Transformer’s self-attention is able to learn from all timesteps regardless of the current timesteps. In the training phase the decoder has all target tokens as input, but it should give its outputs based on timesteps before the current timestep for a proper learning process. This is why target masks are introduced.&lt;/p&gt;
+
+&lt;h2&gt;Recap: RNN &amp;amp; LSTM&lt;/h2&gt;
+&lt;p&gt;RNNs and LSTMs don’t need such masking due to their recurrence relations which make each time step depending on only previous timesteps. Let’s remember RNN formulas:&lt;/p&gt;
+
+\[\begin{aligned}
+&amp;amp; {a_t} = b + W{h_{t-1}} + U{x_t} &amp;amp; (1) \\ &amp;amp;
+{h_t} = tanh({a_t}) &amp;amp; (2) \\ &amp;amp;
+{o_t} = c + V{h_t}  &amp;amp; (3) \\ &amp;amp;
+{\widehat{y}_t} = softmax({o_t}) &amp;amp; (4)
+\end{aligned}\]
+
+&lt;p&gt;If we write output in terms of weights, bias, input and hidden states we can barely see the relation between current timestep and previous ones.&lt;/p&gt;
+
+\[\begin{aligned}
+&amp;amp; {\widehat{y}_t} = softmax({c + V{tanh({b + W{h_{t-1}} + U{x_t}})}})
+\end{aligned}\]
+
+&lt;h2&gt;Overview: Transformers&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/transformer-arch.png&quot; alt=&quot;&quot; style=&quot;float:left; height: 700px&quot; /&gt;
+The diagram from the paper &lt;em&gt;Attention Is All You Need&lt;/em&gt; clearly shows that a Transformer mostly consists of Multi-Head Attentions. The unit on the left is the encoder of the Transformer and the one on the right is the decoder. We will focus on the decoder, especially on Masked Multi-Head Attention which prevents information from the future timesteps to leak with its mask.&lt;/p&gt;
+
+&lt;p&gt;A Multi-Head Attention is formed by multiple Scaled Dot-Product Attention as shown below. After concatenating outputs of each attention, they are passed through a linear layer.&lt;/p&gt;
+
+&lt;p&gt;On the other hand, Scaled Dot-Product Attention has Key, Query and Value matrices. Multiplication of Key and Query matrices determines how much the model attends to each value.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/attention.png&quot; alt=&quot;&quot; style=&quot;align:center; margin:auto; padding:auto; display:block&quot; /&gt;&lt;/p&gt;
+
+&lt;h2&gt;Towards Visual Understanding&lt;/h2&gt;
+
+&lt;p&gt;It’s not easy to think how the values flow through all the network and make sure the output of each timestep only depends on the previous timesteps. Since numbers, especially floating numbers, are too abstract to understand such complex interactions, we need a more intuitive representation to follow information flow across the network.&lt;/p&gt;
+
+&lt;p&gt;Here is a colorful idea: Using colors to show interactions between numbers. Since human brain is highly specialized in visual capabilities, it’s one of the best ways to express information flow across the network. Also colors have quite useful properties letting us to &lt;em&gt;colorize&lt;/em&gt; some mathematical operations. First of all, we can mix two colors to get a new color, which is similar to addition.&lt;/p&gt;
+
+&lt;p&gt;Furthermore, any color can be created by mixing the colors accepted as primary colors (e.g. red, green, blue) and any primary color cannot be created by mixing the other two primary colors. These properties of the primary colors make them somehow &lt;em&gt;linearly independent&lt;/em&gt;. If we think primary colors as basis of the colorspace, then we can &lt;em&gt;colorize&lt;/em&gt; some of the operations easily.&lt;/p&gt;
+
+&lt;h3&gt;Colorizing Operations&lt;/h3&gt;
+&lt;p&gt;Let’s replace \(\widehat{i}, \widehat{j}, \widehat{k}\) unit vectors with red, blue, green &lt;em&gt;unit vectors&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;\(\widehat{i} = \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}\) &lt;span class=&quot;circle&quot; style=&quot;color: rgba(255, 0, 0, 1.0)&quot;&gt;&lt;/span&gt;
+            
+\(\widehat{j} = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}\) &lt;span class=&quot;circle&quot; style=&quot;color: rgba(0, 255, 0, 1.0)&quot;&gt;&lt;/span&gt;
+            
+\(\widehat{k} = \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}\) &lt;span class=&quot;circle&quot; style=&quot;color: rgba(0, 0, 255, 1.0)&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;An interactive example for addition:&lt;/p&gt;
+
+&lt;iframe src=&quot;https://matrix-vis-app.herokuapp.com/&quot; style=&quot;width:100%; border:none; height:700px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;However it’s not the case that every operation can be &lt;em&gt;colororized&lt;/em&gt; in this manner. Mathematical operations such as multiplication, exponentiation make trouble. For example, think about element wise multiplication of red and blue unit vectors. The zeroes will cancel out red and blue values although we want the result to carry information from both blue and red values. Another example is that exponentiating the red unit vector will give positive blue and green values. To colorize such operations meaningfully, after carrying out the operation with &lt;em&gt;normal&lt;/em&gt; numbers we can distribute values to the colors involved in operands. For this to happen, we must make sure that those operations only have effect on those colors.&lt;/p&gt;
+
+&lt;h2&gt;Visualizaton&lt;/h2&gt;
+
+&lt;p&gt;For the sake of simplicity, let our transformer be 1-layered 1-headed transformer and the target sequence be 3 tokens length. The fact that we want to visualize is each timestep at output only carries information from the target tokens from the previous timesteps.&lt;/p&gt;
+
+&lt;p&gt;Let assign a primary color for each token embedding. Each element of the embedding can be thought as scalar-unit vector multiplication, so each element will have a different shade of the color chosen for that token embedding. If we think of weight-embedding interactions as scalar-vector multiplications, we can expect that each output must consist of colors of the token embeddings from the previous timesteps.&lt;/p&gt;
+
+&lt;p&gt;The tokens embeddings look like this:&lt;/p&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/embedding.html&quot; style=&quot;width:100%; border:none; height:350px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h3&gt;Self-Attention&lt;/h3&gt;
+
+&lt;h4&gt;Linear Layers&lt;/h4&gt;
+
+&lt;p&gt;To get Query, Key and Value matrices, it’s needed to multiply embeddings with weight matrices.&lt;/p&gt;
+
+\[\begin{aligned}
+	 XW^{Q} = Q,  \;\;\;  XW^{K} = K,  \;\;\;  XW^{V} = V
+\end{aligned}\]
+
+&lt;p&gt;Since weight matrices don’t carry any information directly related to the tokens, they are colorless and behave like scalar in the multiplications.&lt;/p&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/attn_q.html&quot; style=&quot;width:100%; border:none; height:550px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/attn_k.html&quot; style=&quot;width:100%; border:none; height:550px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/attn_v.html&quot; style=&quot;width:100%; border:none; height:550px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h4&gt;Scaled Dot-Product Attention&lt;/h4&gt;
+
+&lt;p&gt;Attention is defined as&lt;/p&gt;
+
+\[\begin{aligned}
+	Attention(Q, K, V) = softmax(\frac{QK^{T}}{\sqrt{d_{k}}})V
+	\end{aligned}\]
+
+&lt;p&gt;For the decoder’s self-attention, masking is applied to \(QK^{T}\). Let’s visualize this part.&lt;/p&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/attn_scores.html&quot; style=&quot;width:100%; border:none; height:400px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h5&gt;Masking and Softmax&lt;/h5&gt;
+
+&lt;p&gt;Let’s define the mask I:&lt;/p&gt;
+
+\[\begin{aligned} I_{ij} = \left\{
+	\begin{array}{ll}
+		1 &amp;amp; \mbox{if } i \leq j \\
+		-inf &amp;amp; \mbox{if } i &amp;gt; j
+	\end{array}
+ \right. \end{aligned}\]
+
+&lt;p&gt;In this case it will be:&lt;/p&gt;
+
+\[\begin{aligned} I = \begin{bmatrix} 1 &amp;amp; -inf &amp;amp; -inf \\ 1  &amp;amp; 1 &amp;amp; -inf \\ 1 &amp;amp; 1 &amp;amp; 1 \end{bmatrix} \end{aligned}\]
+
+&lt;p&gt;Apply mask to attention scores with element wise multiplication:&lt;/p&gt;
+
+\[\begin{aligned}
+	QK^{T} * I =  \begin{bmatrix} 0.82 &amp;amp; 0.74 &amp;amp; 0.91 \\ 0.65  &amp;amp; 0.58 &amp;amp; 0.71 \\ 0.77 &amp;amp; 0.69 &amp;amp; 0.85 \end{bmatrix}  * \begin{bmatrix} 1 &amp;amp; -inf &amp;amp; -inf \\ 1  &amp;amp; 1 &amp;amp; -inf \\ 1 &amp;amp; 1 &amp;amp; 1 \end{bmatrix} 
+	 = \begin{bmatrix} 0.82 &amp;amp; {-inf} &amp;amp; {-inf} \\ 0.65  &amp;amp; 0.58 &amp;amp; {-inf} \\ 0.77 &amp;amp; 0.69 &amp;amp; 0.85 \end{bmatrix} 
+	\end{aligned}\]
+
+&lt;p&gt;Softmax is defined as&lt;/p&gt;
+
+\[softmax(x)_{i} = \frac{e^{x_{i}}}{\sum_{j}^{}{e^{x_{j}}}}\]
+
+&lt;p&gt;Since \(e^{-inf} = 0\) all \(QK^{T}_{ij}\) will be zero where i &amp;lt; j, which means dot-products of current timestep (i) with future timesteps will cancel out.&lt;/p&gt;
+
+&lt;p&gt;Masked \(QK^{T}\) will be scaled by 0.5 according to the formula since \(d_{k} = 4\).&lt;/p&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/softmax.html&quot; style=&quot;width:100%; border:none; height:400px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/qktv.html&quot; style=&quot;width:100%; border:none; height:550px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h5&gt;Linear Layer&lt;/h5&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/attn_last_linear.html&quot; style=&quot;width:100%; border:none; height:400px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h3&gt;Add &amp;amp; Normalize&lt;/h3&gt;
+
+&lt;h4&gt;Add&lt;/h4&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/add.html&quot; style=&quot;width:100%; border:none; height:350px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h4&gt;LayerNorm&lt;/h4&gt;
+
+\[\begin{aligned} 
+	y = \frac{x-\mu_{x}}{\sqrt{\sigma^{2}_{x} + \epsilon}} * \gamma + \beta
+   \end{aligned}\]
+
+&lt;p&gt;LayerNorm is not easy-to-colorize. Due to the expression in the denominator, it’s impossible to keep a linear relation between colors and values of the cells. Although it’s not easily colorizable, we know LayerNorm will not carry any information between timesteps because it’s a normalization across features. So mean and variance calculation just involves the timesteps that have been involved so far for current timestep. Since learnable parameters \(\gamma\) and \(\beta\) are used for elementwise multiplication and addition respectively, they will not change information distribution across timesteps, so we can safely distribute new values to nonzero colors of each value for visualization purposes.&lt;/p&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/layernorm.html&quot; style=&quot;width:100%; border:none; height:350px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h3&gt;Encoder-Decoder Attention&lt;/h3&gt;
+
+&lt;p&gt;In encoder-decoder attention Query and Value matrices are formed from output of the encoder network. Since they only carry information of the source sequence, they can be behaved as same as weight matrices for visualization purposes. At the same time the Query matrix formed from the output of the LayerNorm. By putting all of these together, encoder-decoder attention can be defined as:&lt;/p&gt;
+
+\[\begin{aligned} 
+	Attention(Q, K, V)_{encdec} = softmax(\frac{Q_{enc}K^{T}}{\sqrt{d_{k}}})V_{enc} 
+	\end{aligned}\]
+
+&lt;p&gt;Visualization of encoder-decoder attention is very similar to self-attention except that \(Q_{enc}\) and \(V_{enc}\) are colorless like weight matrices. Inferring from this similarity, we can safely say that information distribution across timesteps is preserved and skip an additional visualization.&lt;/p&gt;
+
+&lt;h3&gt;Add &amp;amp; Normalize&lt;/h3&gt;
+
+&lt;p&gt;This is almost the same as previous Add &amp;amp; Normalize except that we add the output of the previous LayerNorm to the output of the encoder-decoder attention. In terms of visualization, color/information distribution across timesteps is the same as the previous Add &amp;amp; Normalize layer, so we can skip this part.&lt;/p&gt;
+
+&lt;h3&gt;FFN Layer&lt;/h3&gt;
+
+&lt;p&gt;In the Transformer architecture fully-connected feed-forward networks are formulated as:&lt;/p&gt;
+
+\[\begin{aligned}
+	FFN(x) = ReLU(xW_{1} + b_{1})W_{2} + b_{2} = max(0 , xW_{1} + b_{1})W_{2} + b_{2}
+   \end{aligned}\]
+
+&lt;p&gt;For the sake of the simplicity, let’s skip biases.&lt;/p&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/ffn.html&quot; style=&quot;width:100%; border:none; height:700px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Since all values are nonzero, \(xW_{1}\) is equal to \(ReLU(xW_{1})\).&lt;/p&gt;
+
+&lt;h3&gt;Add &amp;amp; Normalize&lt;/h3&gt;
+
+&lt;p&gt;This is almost the same as previous Add &amp;amp; Normalize layers except that this time, we add the output of the previous LayerNorm to the output of the feed-forward network. In terms of visualization, color/information distribution across timesteps is just like previous Add &amp;amp; Normalize layers, so we can skip this part.&lt;/p&gt;
+
+&lt;h3&gt;Linear&lt;/h3&gt;
+
+&lt;p&gt;Assuming our vocabulary size is 10, linear layer will output logits.&lt;/p&gt;
+
+&lt;iframe src=&quot;/assets/visualizations/logits.html&quot; style=&quot;width:100%; border:none; height:600px;&quot;&gt;&lt;/iframe&gt;
+
+&lt;h3&gt;Softmax&lt;/h3&gt;
+
+&lt;p&gt;As we have seen before, softmax will be applied for rows and will not change information/color distribution.&lt;/p&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;We have covered how LSTMs and RNNs carried information from previous timesteps through hidden states, the general structure of Transformer architecture and visualized effect of the target mask through all network step-by-step.&lt;/p&gt;
+
+&lt;p&gt;By applying mask to self-attention scores in the decoder, all scores related to future timesteps were zeroed out for each timestep which leads timesteps to carry the information of only themselves and previous timesteps until the end of the pipeline. By hovering each value we can easily see how each timestep consists of the colors from previous timesteps.&lt;/p&gt;
+
+&lt;h2&gt;Notes about Color Space&lt;/h2&gt;
+
+&lt;p&gt;There are some issues with color spaces restricting us in terms of mathematical flexibility. One of them is each of the colors (RGB) can be 1.0 at maximum. So weights and input values were tuned in order not to exceed the limit value. In the interactive addition example, if the sum of two colors exceeds 1.0, it’s accepted as 1.0.&lt;/p&gt;
+
+&lt;p&gt;Another issue is dealing with nonlinearities. Although color spaces are very convenient for linear operations, it’s hard to show nonlinear operations. After showing that information distribution across timesteps does not change mathematically, we distribute new values to colors proportional to the amount of the colors involved. It’s worth mentioning that the key point of visualization with colors is showing information distribution across timesteps.&lt;/p&gt;
+
+&lt;h2&gt;References&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://arxiv.org/pdf/1706.03762.pdf&quot;&gt;&lt;strong&gt;Attention Is All You Need&lt;/strong&gt;,  &lt;em&gt;Vaswani et al&lt;/em&gt;, 2017&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.deeplearningbook.org/contents/rnn.html&quot;&gt;&lt;strong&gt;Deep Learning&lt;/strong&gt;, &lt;em&gt;Goodfellow et al.&lt;/em&gt;, 2016 - RNN &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://nlp.seas.harvard.edu/2018/04/03/attention.html&quot;&gt;&lt;strong&gt;The Annotated Transformer&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://jalammar.github.io/illustrated-transformer/&quot;&gt;&lt;strong&gt;The Illustrated Transformer&lt;/strong&gt;, &lt;em&gt;Jay Alammar&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</content>
+
+      
+      
+      
+      
+      
+
+      
+        <author>
+            <name>Kerem Zaman</name>
+          
+          
+        </author>
+      
+
+      
+        <category term="deep-learning" />
+      
+        <category term="nlp" />
+      
+        <category term="transformers" />
+      
+
+      
+
+      
+        <summary type="html">While transformers have been becoming increasingly popular across different domains, there are still points which aren’t emphasized enough. One of those points is how the target mask given to the transformer decoder behaves in the training phase of the network. I’ll try to explain its behavior with a visual intuition.</summary>
+      
+
+      
+      
+    </entry>
+  
+  
+</feed>
