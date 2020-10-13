@@ -35,7 +35,7 @@ twitter_image:
 facebook_app_id:
 facebook_image:
 google_analytics: UA-28736234-2
-comments: false
+comments: true
 
 # Build settings
 theme: jekyll-whiteglass
