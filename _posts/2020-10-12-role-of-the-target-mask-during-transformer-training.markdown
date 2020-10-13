@@ -1,7 +1,7 @@
 ---
 mathjax: true
 layout: post
-title:  "Role of Target Mask in Transformer Training"
+title:  "Role of the Target Mask during Transformer Training"
 date:   2020-10-12 12:10:56 +0900
 categories: deep-learning nlp transformers
 url: http://127.0.0.1:4000
@@ -22,7 +22,7 @@ explain its behavior with a visual intuition.
 Unlike RNNs, Transformer's self-attention is able to learn from all timesteps regardless of the current timesteps. In the training phase the decoder has all target tokens as input, but it should give its outputs based on timesteps before the current timestep for a proper learning process. This is why target masks are introduced.
 
 ## Recap: RNN & LSTM
-RNNs and LSTMs don't need such masking due to their recurrence relations which make each time step dependending on only previous timesteps. Let's remember RNN formulas:
+RNNs and LSTMs don't need such masking due to their recurrence relations which make each time step depending on only previous timesteps. Let's remember RNN formulas:
 
 $$
 \begin{aligned}
@@ -223,17 +223,20 @@ As we have seen before, softmax will be applied for rows and will not change inf
 
 ## Conclusion
 
+We have covered how LSTMs and RNNs carried information from previous timesteps through hidden states, the general structure of Transformer architecture and visualized effect of the target mask through all network step-by-step.
+
 By applying mask to self-attention scores in the decoder, all scores related to future timesteps were zeroed out for each timestep which leads timesteps to carry the information of only themselves and previous timesteps until the end of the pipeline. By hovering each value we can easily see how each timestep consists of the colors from previous timesteps.
 
 ## Notes about Color Space
 
-There are some issues with color spaces restricting us in terms of mathematical flexibility. One of them is each of the colors (RGB) can be 1.0 at maximum. So weights and input values were tuned in order not to exceed the limit value. In the interactive additon example, if the sum of two colors exceeds 1.0, it's accepted as 1.0. 
+There are some issues with color spaces restricting us in terms of mathematical flexibility. One of them is each of the colors (RGB) can be 1.0 at maximum. So weights and input values were tuned in order not to exceed the limit value. In the interactive addition example, if the sum of two colors exceeds 1.0, it's accepted as 1.0. 
 
-Another issue is dealing with nonlinearities. Although color spaces are very convenient for linear operations, it's hard to show nonlinear operations. After showing that information distribution across timesteps does not change mathematically, we distribute new values to colors proportional to the amount of the colors involved. It worths mentioning that the key point of visualization with colors is showing information distribution across timesteps.
+Another issue is dealing with nonlinearities. Although color spaces are very convenient for linear operations, it's hard to show nonlinear operations. After showing that information distribution across timesteps does not change mathematically, we distribute new values to colors proportional to the amount of the colors involved. It's worth mentioning that the key point of visualization with colors is showing information distribution across timesteps.
 
 
 ## References
 
-1. [**Deep Learning**, _Goodfellow et al._, 2016 - RNN ](http://www.deeplearningbook.org/contents/rnn.html)
-2. [**The Annotated Transformer**](https://nlp.seas.harvard.edu/2018/04/03/attention.html)
-3. [**The Illustrated Transformer**, _Jay Alammar_](http://jalammar.github.io/illustrated-transformer/)
+1. [**Attention Is All You Need**,  _Vaswani et al_, 2017](https://arxiv.org/pdf/1706.03762.pdf)
+2. [**Deep Learning**, _Goodfellow et al._, 2016 - RNN ](http://www.deeplearningbook.org/contents/rnn.html)
+3. [**The Annotated Transformer**](https://nlp.seas.harvard.edu/2018/04/03/attention.html)
+4. [**The Illustrated Transformer**, _Jay Alammar_](http://jalammar.github.io/illustrated-transformer/)
