@@ -4,15 +4,21 @@ title: About
 permalink: /about/
 ---
 
-This is the whiteglass theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+# Kerem Zaman
+Undergrad Computer Engineering Student at Boğaziçi University
 
-You can find the source code for whiteglass at GitHub:
-[yous](https://github.com/yous) /
-[whiteglass](https://github.com/yous/whiteglass)
-
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+## Interests
+Natural Language Processing, Deep Learning, Autonomous Driving
 
 
-[jekyll-organization]: https://github.com/jekyll
+[![twitter][1.1]][1]
+[![github][2.1]][2]
+
+
+[1.1]: /assets/twitter-icon.svg
+{:height="32px" width="32px"}
+[2.1]: /assets/github-icon.svg
+{:height="32px" width="32px"}
+
+[1]: http://www.twitter.com/KeremZaman3
+[2]: http://www.github.com/KeremZaman
