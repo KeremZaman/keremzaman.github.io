@@ -2,11 +2,11 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title:  # the website title (if blank, full name will be used instead)
+title: Kerem Zaman # the website title (if blank, full name will be used instead)
 first_name: Kerem
-middle_name: 
+middle_name:
 last_name: Zaman
-email: 
+email:
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   
 footer_text: >
@@ -273,8 +273,8 @@ display_categories: ['blockquotes'] # these categories will be displayed on the 
 
 scholar:
 
-  last_name: [Einstein]
-  first_name: [Albert, A.]
+  last_name: [Zaman]
+  first_name: [Kerem, K.]
 
   style: apa
   locale: en
