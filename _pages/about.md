@@ -18,8 +18,8 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-I'm currently a second-year PhD student at the UNC-Chapel Hill where I am advised by [Shashank Srivastava](https://www.ssriva.com/). 
+I'm currently a third-year PhD student at the UNC-Chapel Hill where I am advised by [Shashank Srivastava](https://www.ssriva.com/). 
 
 Before PhD, I earned my bachelor's degree from the Department of Computer Engineering Boğaziçi University, where my thesis advisor was [Pinar Yanardag](https://pinguar.org/).
 
-I'm interested in  interpretable and explainable machine learning, multilingual NLP, Large Language Models (LLMs). robustness and fairness. My ultimate research goal is to enhance our understanding of black-box models.
+I'm interested in  interpretable and explainable machine learning, multilingual NLP, reasoning, robustness and fairness. My ultimate research goal is to enhance our understanding of black-box models.
