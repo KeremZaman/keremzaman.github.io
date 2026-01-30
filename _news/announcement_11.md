@@ -5,6 +5,5 @@ inline: true
 related_posts: false
 ---
 
-Paper accepted into [ICLR 2025](https://iclr.cc/Conferences/2026)! "A Causal Lens for Evaluating Faithfulness Metrics
-" \[[pdf](https://arxiv.org/pdf/2411.17957)\] \[[website](https://diffvax.github.io/)\]
+Paper accepted into [ICLR 2026](https://iclr.cc/Conferences/2026)! "DiffVax: Optimization-Free Image Immunization Against Diffusion-Based Editing" \[[pdf](https://arxiv.org/pdf/2411.17957)\] \[[website](https://diffvax.github.io/)\]
 
