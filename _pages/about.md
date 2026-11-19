@@ -14,10 +14,10 @@ profile:
 
 news: true  # includes a list of news items
 latest_posts: false  # includes a list of the newest posts
-selected_papers: false # includes a list of papers marked as "selected={true}"
+selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true  # includes minimal links beneath the page title
 job_market: >-
-  I'm seeking industry Research Scientist positions in AI safety, interpretability, and LLM reasoning.
+   I am on the job market, looking for industry Research Scientist roles in Summer 2027. If you are interested in hiring then please reach out via email.
 ---
 
 I'm currently a PhD student at the UNC-Chapel Hill where I am advised by [Shashank Srivastava](https://www.ssriva.com/). My research focuses on interpretable and explainable NLP, AI safety, reasoning, fairness, and robustness. My ultimate goal is to advance **safe** and **transparent** AI systems by deepening our understanding of black-box models.

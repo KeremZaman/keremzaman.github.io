@@ -29,8 +29,7 @@ html[data-theme='dark'] {
     text-underline-offset: 0.2em;
   }
 
-  a + a::before {
-    content: '|';
+  .profile-link-separator {
     display: inline-block;
     margin: 0 0.65rem;
     color: var(--paper-muted-color);
@@ -45,6 +44,7 @@ html[data-theme='dark'] {
 
 // Explicit contrasting colors make availability visible in either theme.
 .job-market {
+  clear: both;
   margin: 0 0 1.75rem;
   padding: 1rem 1.25rem;
   border: 1px solid #e6bd58;
