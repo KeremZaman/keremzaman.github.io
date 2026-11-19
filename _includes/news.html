@@ -7,7 +7,6 @@
     {% else %}
       {% assign news_limit = news_size %}
     {% endif %}
-    <div{% if include.limit and site.announcements.scrollable and news_size > 3 %} class="news-scroll" tabindex="0" role="region" aria-label="Recent news"{% endif %}>
       <ul class="news-list">
         {% for item in news limit: news_limit %}
           <li class="news-item">
@@ -22,7 +21,6 @@
           </li>
         {%- endfor %}
       </ul>
-    </div>
   {%- else -%}
     <p>No news so far...</p>
   {%- endif %}

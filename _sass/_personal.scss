@@ -210,7 +210,7 @@ html[data-theme='dark'] .job-market {
   }
 }
 
-// News uses the same spacing and text hierarchy as papers.
+// Compact news entries with the same colors and text hierarchy as papers.
 .news {
   .news-list {
     list-style: none;
@@ -219,13 +219,15 @@ html[data-theme='dark'] .job-market {
   }
 
   .news-item {
-    margin: 0 0 1.25rem;
-    padding: 0.15rem 0;
+    margin: 0 0 0.5rem;
+    padding: 0;
+
+    &:last-child { margin-bottom: 0; }
   }
 
   .news-date {
     display: block;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0;
     color: var(--paper-muted-color);
     font-size: 0.875rem;
     line-height: 1.5;
@@ -239,12 +241,6 @@ html[data-theme='dark'] .job-market {
     p { margin: 0; }
   }
 
-  .news-scroll {
-    max-height: 24rem;
-    overflow-y: auto;
-    padding-right: 0.75rem;
-    scrollbar-width: thin;
-  }
 }
 
 @media (max-width: 575.98px) {
