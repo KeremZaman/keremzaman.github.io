@@ -4,7 +4,7 @@ permalink: /misc/
 title: misc
 description:
 nav: true
-nav_order: 1
+nav_order: 2
 ---
 
 * I'm a [Laz](https://en.wikipedia.org/wiki/Laz_people) from Turkey. Do you know that [Lazuri (Laz language)](https://en.wikipedia.org/wiki/Laz_language) is classified as [endangered](https://en.wal.unesco.org/countries/turkiye/languages/laz) by UNESCO?

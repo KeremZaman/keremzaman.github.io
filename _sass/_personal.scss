@@ -1,0 +1,85 @@
+// Compact homepage links and availability notice.
+.profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin: 0.75rem 0 1.5rem;
+  font-size: 1rem;
+}
+
+.job-market {
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--global-theme-color);
+  background: var(--global-code-bg-color);
+  line-height: 1.6;
+}
+
+// Full-width entries with inline venues and plain resource links.
+.publications {
+  margin-top: 0;
+
+  h2.bibliography {
+    margin: 1.5rem 0 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--global-divider-color);
+    color: var(--global-text-color);
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  h2.bibliography:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  ol.bibliography {
+    margin-bottom: 0;
+
+    li {
+      margin-bottom: 1rem;
+
+      .title {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
+      .author {
+        margin-top: 0.15rem;
+        line-height: 1.5;
+
+        > em {
+          border-bottom: 0;
+          font-weight: 600;
+        }
+      }
+
+      .publication-details {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.25rem 0.75rem;
+        margin-top: 0.2rem;
+        font-size: 0.9375rem;
+        line-height: 1.5;
+      }
+
+      .publication-venue {
+        font-weight: 500;
+      }
+
+      .publication-presentation {
+        color: var(--global-theme-color);
+        font-weight: 600;
+      }
+
+      .publication-links {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 0.75rem;
+      }
+    }
+  }
+}

@@ -9,9 +9,21 @@ layout: default
             {% if site.title == "blank" -%}<span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }} {{ site.last_name }}{%- else -%}{{ site.title }}{%- endif %}
           </h1>
           <p class="desc">{{ page.subtitle }}</p>
+          {% if page.social %}
+          <nav class="profile-links" aria-label="Profile links">
+            <a href="https://scholar.google.com/citations?user={{ site.scholar_userid }}">Google Scholar</a>
+            <a href="{{ site.cv_pdf | prepend: '/assets/pdf/' | relative_url }}">CV</a>
+            <a href="https://twitter.com/{{ site.twitter_username }}">Twitter</a>
+          </nav>
+          {% endif %}
         </header>
 
         <article>
+          {% if page.job_market %}
+          <aside class="job-market" aria-label="Job market availability">
+            <strong>On the job market:</strong> {{ page.job_market }}
+          </aside>
+          {% endif %}
           {% if page.profile -%}
           <div class="profile float-{%- if page.profile.align == 'left' -%}left{%- else -%}right{%- endif -%}">
             {%- if page.profile.image %}
@@ -59,19 +71,6 @@ layout: default
             {%- include selected_papers.html %}
           {%- endif %}
 
-          <!-- Social -->
-          {%- if page.social %}
-            <div class="social">
-              <div class="contact-icons">
-                {% include social.html %}
-              </div>
-
-              <div class="contact-note">
-                {{ site.contact_note }}
-              </div>
-
-            </div>
-          {%- endif %}
         </article>
 
 </div>
