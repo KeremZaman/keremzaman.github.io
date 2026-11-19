@@ -3,14 +3,32 @@
   --profile-link-color: var(--global-theme-color);
   --paper-accent-color: var(--global-theme-color);
   --paper-muted-color: #626970;
+  --entry-rule-color: #c3cfdd;
 }
 
 html[data-theme='dark'] {
   --paper-muted-color: #b9bdc4;
+  --entry-rule-color: #455970;
 }
 
 .post-header .desc {
   margin-bottom: 0.5rem;
+}
+
+// Inline links remain recognizable without relying on color alone.
+.post article p a,
+.news .news-content a,
+.publications .publication-links a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration-thickness: 2px;
+  }
 }
 
 .profile-links {
@@ -21,9 +39,9 @@ html[data-theme='dark'] {
   a {
     display: inline-block;
     color: var(--profile-link-color);
-    font-weight: 500;
+    font-weight: 600;
     text-decoration: underline;
-    text-decoration-color: var(--global-divider-color);
+    text-decoration-color: currentColor;
     text-underline-offset: 0.2em;
   }
 
@@ -122,6 +140,12 @@ html[data-theme='dark'] .job-market {
 }
 
 // Reference-inspired paper list: title, venue, italic authors, resource links.
+.home-section {
+  > h2 { margin-bottom: 1rem; }
+
+  + .home-section { margin-top: 2.25rem; }
+}
+
 .publications {
   margin-top: 0;
 
@@ -132,7 +156,8 @@ html[data-theme='dark'] .job-market {
 
     > li {
       margin: 0 0 1.25rem;
-      padding: 0.15rem 0;
+      padding: 0.15rem 0 0.15rem 0.8rem;
+      border-left: 2px solid var(--entry-rule-color);
     }
 
     li {
@@ -220,7 +245,8 @@ html[data-theme='dark'] .job-market {
 
   .news-item {
     margin: 0 0 0.5rem;
-    padding: 0;
+    padding: 0 0 0 0.8rem;
+    border-left: 2px solid var(--entry-rule-color);
 
     &:last-child { margin-bottom: 0; }
   }

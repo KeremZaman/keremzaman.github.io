@@ -48,27 +48,30 @@ layout: default
           {%- endif %}
 
           <div class="intro-copy">
-            {{ content }}
-
           {% if page.job_market %}
           <aside class="job-market" aria-label="Job market availability">
             <strong class="job-market-title">On the job market</strong>
             <p>{{ page.job_market }}</p>
           </aside>
           {% endif %}
+            {{ content }}
           </div>
           </div>
 
           <!-- News -->
           {% if page.news and site.announcements.enabled -%}
-            <h2><a href="{{ '/news/' | relative_url }}" style="color: inherit;">news</a></h2>
+          <section class="home-section" aria-labelledby="news-heading">
+            <h2 id="news-heading"><a href="{{ '/news/' | relative_url }}" style="color: inherit;">news</a></h2>
             {%- include news.html limit=true %}
+          </section>
           {%- endif %}
 
           <!-- Selected papers -->
           {% if page.selected_papers -%}
-            <h2><a href="{{ '/publications/' | relative_url }}" style="color: inherit;">selected publications</a></h2>
+          <section class="home-section" aria-labelledby="selected-publications-heading">
+            <h2 id="selected-publications-heading"><a href="{{ '/publications/' | relative_url }}" style="color: inherit;">selected publications</a></h2>
             {%- include selected_papers.html %}
+          </section>
           {%- endif %}
 
           <!-- Latest posts -->
