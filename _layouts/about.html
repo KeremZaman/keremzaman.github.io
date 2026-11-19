@@ -21,7 +21,8 @@ layout: default
         <article>
           {% if page.job_market %}
           <aside class="job-market" aria-label="Job market availability">
-            <strong>On the job market:</strong> {{ page.job_market }}
+            <strong class="job-market-title">On the job market</strong>
+            <p>{{ page.job_market }}</p>
           </aside>
           {% endif %}
           {% if page.profile -%}

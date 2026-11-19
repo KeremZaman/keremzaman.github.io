@@ -1,7 +1,16 @@
 ---
 ---
 <div id="{{ entry.key }}" class="publication-entry">
-  <div class="title">{{ entry.title }}</div>
+  {% assign paper_url = entry.pdf | default: entry.html | default: entry.url %}
+  {% if entry.pdf %}
+    {% unless entry.pdf contains '://' %}
+      {% assign paper_url = entry.pdf | prepend: '/assets/pdf/' | relative_url %}
+    {% endunless %}
+  {% endif %}
+  <div class="title">{% if paper_url %}<a href="{{ paper_url }}">{{ entry.title }}</a>{% else %}{{ entry.title }}{% endif %}</div>
+  <div class="publication-venue">
+    {{ entry.abbr | default: entry.journal | default: entry.booktitle }} {{ entry.year }}{% if entry.presentation %} <strong class="publication-presentation">({{ entry.presentation }})</strong>{% endif %}
+  </div>
   <div class="author">
     {% if entry.author_credit %}
       {{ entry.author_credit | escape | replace: 'Kerem Zaman', '<em>Kerem Zaman</em>' }}
@@ -34,28 +43,22 @@
       {%- endfor -%}
     {% endif %}
   </div>
-  <div class="publication-details">
-    <span class="publication-venue">{{ entry.abbr | default: entry.journal | default: entry.booktitle }} {{ entry.year }}</span>
-    {% if entry.presentation %}
-      <span class="publication-presentation">{{ entry.presentation }}</span>
-    {% endif %}
-    <span class="publication-links">
-      {% assign resources = 'pdf,html,code,website,supp,poster,slides,blog' | split: ',' %}
-      {% for resource in resources %}
-        {% assign resource_url = entry[resource] %}
-        {% if resource_url %}
-          {% unless resource_url contains '://' %}
-            {% if resource == 'pdf' or resource == 'supp' or resource == 'poster' or resource == 'slides' %}
-              {% assign resource_url = resource_url | prepend: '/assets/pdf/' | relative_url %}
-            {% endif %}
-          {% endunless %}
-          <a href="{{ resource_url }}">{% case resource %}{% when 'pdf' %}PDF{% when 'html' %}Paper{% when 'website' %}Project{% when 'supp' %}Supplement{% else %}{{ resource | capitalize }}{% endcase %}</a>
-        {% endif %}
-      {% endfor %}
-      {% if entry.url and entry.pdf == nil and entry.html == nil %}
-        <a href="{{ entry.url }}">Paper</a>
+  <div class="publication-links">
+    {% assign resources = 'pdf,html,code,website,supp,poster,slides,blog' | split: ',' %}
+    {% for resource in resources %}
+      {% assign resource_url = entry[resource] %}
+      {% if resource_url %}
+        {% unless resource_url contains '://' %}
+          {% if resource == 'pdf' or resource == 'supp' or resource == 'poster' or resource == 'slides' %}
+            {% assign resource_url = resource_url | prepend: '/assets/pdf/' | relative_url %}
+          {% endif %}
+        {% endunless %}
+        <a href="{{ resource_url }}">{% case resource %}{% when 'pdf' %}PDF{% when 'html' %}Paper{% when 'website' %}Project{% when 'supp' %}Supplement{% else %}{{ resource | capitalize }}{% endcase %}</a>
       {% endif %}
-    </span>
+    {% endfor %}
+    {% if entry.url and entry.pdf == nil and entry.html == nil %}
+      <a href="{{ entry.url }}">Paper</a>
+    {% endif %}
   </div>
   {% if entry.note %}
     <div class="publication-note">{{ entry.note }}</div>
