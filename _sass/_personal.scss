@@ -1,13 +1,11 @@
 // Profile links form a quiet, separated utility line beneath the name.
 :root {
-  --profile-link-color: #244e78;
-  --paper-accent-color: #1e3a5f;
+  --profile-link-color: var(--global-theme-color);
+  --paper-accent-color: var(--global-theme-color);
   --paper-muted-color: #626970;
 }
 
 html[data-theme='dark'] {
-  --profile-link-color: #a4c9ec;
-  --paper-accent-color: #b4d3f0;
   --paper-muted-color: #b9bdc4;
 }
 
@@ -134,8 +132,7 @@ html[data-theme='dark'] .job-market {
 
     > li {
       margin: 0 0 1.25rem;
-      padding: 0.15rem 0 0.15rem 1rem;
-      border-left: 3px solid var(--paper-accent-color);
+      padding: 0.15rem 0;
     }
 
     li {
@@ -213,7 +210,7 @@ html[data-theme='dark'] .job-market {
   }
 }
 
-// News uses the same left rule, spacing, and text hierarchy as papers.
+// News uses the same spacing and text hierarchy as papers.
 .news {
   .news-list {
     list-style: none;
@@ -223,8 +220,7 @@ html[data-theme='dark'] .job-market {
 
   .news-item {
     margin: 0 0 1.25rem;
-    padding: 0.15rem 0 0.15rem 1rem;
-    border-left: 3px solid var(--paper-accent-color);
+    padding: 0.15rem 0;
   }
 
   .news-date {
@@ -256,8 +252,4 @@ html[data-theme='dark'] .job-market {
     padding: 0.85rem 1rem;
   }
 
-  .publications ol.bibliography > li,
-  .news .news-item {
-    padding-left: 0.75rem;
-  }
 }
