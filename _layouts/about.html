@@ -21,8 +21,9 @@ layout: default
         </header>
 
         <article>
+          <div class="about-intro{% if page.profile %} has-profile profile-{{ page.profile.align | default: 'right' }}{% endif %}">
           {% if page.profile -%}
-          <div class="profile float-{%- if page.profile.align == 'left' -%}left{%- else -%}right{%- endif -%}">
+          <div class="profile">
             {%- if page.profile.image %}
               {%- assign profile_image_path = page.profile.image | prepend: 'assets/img/' -%}
 
@@ -46,9 +47,8 @@ layout: default
           </div>
           {%- endif %}
 
-          <div class="clearfix">
+          <div class="intro-copy">
             {{ content }}
-          </div>
 
           {% if page.job_market %}
           <aside class="job-market" aria-label="Job market availability">
@@ -56,6 +56,8 @@ layout: default
             <p>{{ page.job_market }}</p>
           </aside>
           {% endif %}
+          </div>
+          </div>
 
           <!-- News -->
           {% if page.news and site.announcements.enabled -%}

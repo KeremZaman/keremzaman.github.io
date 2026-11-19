@@ -42,6 +42,51 @@ html[data-theme='dark'] {
   }
 }
 
+// Keep the bio and availability notice in one column beside the photo.
+.about-intro {
+  margin-bottom: 1.75rem;
+
+  > .profile {
+    width: 100%;
+    margin: 0 0 1rem;
+  }
+
+  .intro-copy {
+    min-width: 0;
+  }
+
+  .intro-copy > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 576px) {
+  .about-intro.has-profile {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 30%;
+    gap: 1.5rem;
+    align-items: start;
+
+    > .profile {
+      grid-column: 2;
+      grid-row: 1;
+      margin: 0;
+    }
+
+    > .intro-copy {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    &.profile-left {
+      grid-template-columns: 30% minmax(0, 1fr);
+
+      > .profile { grid-column: 1; }
+      > .intro-copy { grid-column: 2; }
+    }
+  }
+}
+
 // Explicit contrasting colors make availability visible in either theme.
 .job-market {
   clear: both;
@@ -168,12 +213,51 @@ html[data-theme='dark'] .job-market {
   }
 }
 
+// News uses the same left rule, spacing, and text hierarchy as papers.
+.news {
+  .news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .news-item {
+    margin: 0 0 1.25rem;
+    padding: 0.15rem 0 0.15rem 1rem;
+    border-left: 3px solid var(--paper-accent-color);
+  }
+
+  .news-date {
+    display: block;
+    margin-bottom: 0.2rem;
+    color: var(--paper-muted-color);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .news-content {
+    font-size: 1rem;
+    line-height: 1.5;
+
+    a { color: var(--profile-link-color); }
+    p { margin: 0; }
+  }
+
+  .news-scroll {
+    max-height: 24rem;
+    overflow-y: auto;
+    padding-right: 0.75rem;
+    scrollbar-width: thin;
+  }
+}
+
 @media (max-width: 575.98px) {
   .job-market {
     padding: 0.85rem 1rem;
   }
 
-  .publications ol.bibliography > li {
+  .publications ol.bibliography > li,
+  .news .news-item {
     padding-left: 0.75rem;
   }
 }
