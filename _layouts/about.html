@@ -9,11 +9,21 @@ layout: default
             {% if site.title == "blank" -%}<span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }} {{ site.last_name }}{%- else -%}{{ site.title }}{%- endif %}
           </h1>
           <p class="desc">{{ page.subtitle }}</p>
+          {% if page.social %}
+          <nav class="profile-links" aria-label="Profile links">
+            <a href="https://scholar.google.com/citations?user={{ site.scholar_userid }}">Google Scholar</a>
+            <span class="profile-link-separator" aria-hidden="true">|</span>
+            <a href="{{ site.cv_pdf | prepend: '/assets/pdf/' | relative_url }}">CV</a>
+            <span class="profile-link-separator" aria-hidden="true">|</span>
+            <a href="https://twitter.com/{{ site.twitter_username }}">Twitter</a>
+          </nav>
+          {% endif %}
         </header>
 
         <article>
+          <div class="about-intro{% if page.profile %} has-profile profile-{{ page.profile.align | default: 'right' }}{% endif %}">
           {% if page.profile -%}
-          <div class="profile float-{%- if page.profile.align == 'left' -%}left{%- else -%}right{%- endif -%}">
+          <div class="profile">
             {%- if page.profile.image %}
               {%- assign profile_image_path = page.profile.image | prepend: 'assets/img/' -%}
 
@@ -37,14 +47,31 @@ layout: default
           </div>
           {%- endif %}
 
-          <div class="clearfix">
+          <div class="intro-copy">
+          {% if page.job_market %}
+          <aside class="job-market" aria-label="Job market availability">
+            <strong class="job-market-title">On the job market</strong>
+            <p>{{ page.job_market }}</p>
+          </aside>
+          {% endif %}
             {{ content }}
+          </div>
           </div>
 
           <!-- News -->
           {% if page.news and site.announcements.enabled -%}
-            <h2><a href="{{ '/news/' | relative_url }}" style="color: inherit;">news</a></h2>
+          <section class="home-section" aria-labelledby="news-heading">
+            <h2 id="news-heading"><a href="{{ '/news/' | relative_url }}" style="color: inherit;">news</a></h2>
             {%- include news.html limit=true %}
+          </section>
+          {%- endif %}
+
+          <!-- Selected papers -->
+          {% if page.selected_papers -%}
+          <section class="home-section" aria-labelledby="selected-publications-heading">
+            <h2 id="selected-publications-heading"><a href="{{ '/publications/' | relative_url }}" style="color: inherit;">selected publications</a></h2>
+            {%- include selected_papers.html %}
+          </section>
           {%- endif %}
 
           <!-- Latest posts -->
@@ -53,25 +80,6 @@ layout: default
             {%- include latest_posts.html %}
           {%- endif %}
 
-          <!-- Selected papers -->
-          {% if page.selected_papers -%}
-            <h2><a href="{{ '/publications/' | relative_url }}" style="color: inherit;">selected publications</a></h2>
-            {%- include selected_papers.html %}
-          {%- endif %}
-
-          <!-- Social -->
-          {%- if page.social %}
-            <div class="social">
-              <div class="contact-icons">
-                {% include social.html %}
-              </div>
-
-              <div class="contact-note">
-                {{ site.contact_note }}
-              </div>
-
-            </div>
-          {%- endif %}
         </article>
 
 </div>

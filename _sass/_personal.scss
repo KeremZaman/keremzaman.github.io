@@ -1,0 +1,277 @@
+// Profile links form a quiet, separated utility line beneath the name.
+:root {
+  --profile-link-color: var(--global-theme-color);
+  --paper-accent-color: var(--global-theme-color);
+  --paper-muted-color: #626970;
+  --entry-rule-color: #c3cfdd;
+}
+
+html[data-theme='dark'] {
+  --paper-muted-color: #b9bdc4;
+  --entry-rule-color: #455970;
+}
+
+.post-header .desc {
+  margin-bottom: 0.5rem;
+}
+
+// Inline links remain recognizable without relying on color alone.
+.post article p a,
+.news .news-content a,
+.publications .publication-links a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration-thickness: 2px;
+  }
+}
+
+.profile-links {
+  margin: 0 0 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+
+  a {
+    display: inline-block;
+    color: var(--profile-link-color);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+    text-underline-offset: 0.2em;
+  }
+
+  .profile-link-separator {
+    display: inline-block;
+    margin: 0 0.65rem;
+    color: var(--paper-muted-color);
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+// Keep the bio and availability notice in one column beside the photo.
+.about-intro {
+  margin-bottom: 1.75rem;
+
+  > .profile {
+    width: 100%;
+    margin: 0 0 1rem;
+  }
+
+  .intro-copy {
+    min-width: 0;
+  }
+
+  .intro-copy > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 576px) {
+  .about-intro.has-profile {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 30%;
+    gap: 1.5rem;
+    align-items: start;
+
+    > .profile {
+      grid-column: 2;
+      grid-row: 1;
+      margin: 0;
+    }
+
+    > .intro-copy {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    &.profile-left {
+      grid-template-columns: 30% minmax(0, 1fr);
+
+      > .profile { grid-column: 1; }
+      > .intro-copy { grid-column: 2; }
+    }
+  }
+}
+
+// Explicit contrasting colors make availability visible in either theme.
+.job-market {
+  clear: both;
+  margin: 0 0 1.75rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid #e6bd58;
+  border-left: 5px solid #b77912;
+  border-radius: 4px;
+  background: #fff3cd;
+  color: #533b0c;
+  line-height: 1.6;
+
+  .job-market-title {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #754700;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+html[data-theme='dark'] .job-market {
+  background: #3d3017;
+  border-color: #a77b2d;
+  border-left-color: #f3c35c;
+  color: #f7e6bd;
+
+  .job-market-title {
+    color: #ffd77b;
+  }
+}
+
+// Reference-inspired paper list: title, venue, italic authors, resource links.
+.home-section {
+  > h2 { margin-bottom: 1rem; }
+
+  + .home-section { margin-top: 2.25rem; }
+}
+
+.publications {
+  margin-top: 0;
+
+  ol.bibliography {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    > li {
+      margin: 0 0 1.25rem;
+      padding: 0.15rem 0 0.15rem 0.8rem;
+      border-left: 2px solid var(--entry-rule-color);
+    }
+
+    li {
+      .title {
+        margin-bottom: 0.2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.5;
+        color: var(--paper-accent-color);
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        a:hover {
+          text-decoration: underline;
+          text-underline-offset: 0.15em;
+        }
+      }
+
+      .publication-venue {
+        margin-bottom: 0.2rem;
+        color: var(--paper-muted-color);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      .publication-presentation {
+        color: var(--paper-accent-color);
+        font-weight: 700;
+      }
+
+      .author {
+        font-size: 0.9375rem;
+        font-style: italic;
+        line-height: 1.5;
+
+        > em {
+          border: 0;
+          font-style: inherit;
+          font-weight: 700;
+        }
+
+        a {
+          color: inherit;
+          border: 0;
+        }
+      }
+
+      .publication-links {
+        margin-top: 0.3rem;
+        font-size: 0.875rem;
+        line-height: 1.7;
+
+        a {
+          display: inline-block;
+          color: var(--profile-link-color);
+        }
+
+        a + a::before {
+          content: '|';
+          display: inline-block;
+          margin: 0 0.45rem;
+          color: var(--paper-muted-color);
+        }
+      }
+
+      .publication-note {
+        margin-top: 0.2rem;
+        font-size: 0.875rem;
+        color: var(--paper-muted-color);
+      }
+    }
+  }
+}
+
+// Compact news entries with the same colors and text hierarchy as papers.
+.news {
+  .news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .news-item {
+    margin: 0 0 0.5rem;
+    padding: 0 0 0 0.8rem;
+    border-left: 2px solid var(--entry-rule-color);
+
+    &:last-child { margin-bottom: 0; }
+  }
+
+  .news-date {
+    display: block;
+    margin-bottom: 0;
+    color: var(--paper-muted-color);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .news-content {
+    font-size: 1rem;
+    line-height: 1.5;
+
+    a { color: var(--profile-link-color); }
+    p { margin: 0; }
+  }
+
+}
+
+@media (max-width: 575.98px) {
+  .job-market {
+    padding: 0.85rem 1rem;
+  }
+
+}

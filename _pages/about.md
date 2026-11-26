@@ -14,10 +14,12 @@ profile:
 
 news: true  # includes a list of news items
 latest_posts: false  # includes a list of the newest posts
-selected_papers: false # includes a list of papers marked as "selected={true}"
-social: true  # includes social icons at the bottom of the page
+selected_papers: true # includes a list of papers marked as "selected={true}"
+social: true  # includes minimal links beneath the page title
+job_market: >-
+   I am on the job market, looking for industry Research Scientist roles in Summer 2027. If you are interested in hiring then please reach out via email.
 ---
 
-I'm currently a fourth-year PhD student at the UNC-Chapel Hill where I am advised by [Shashank Srivastava](https://www.ssriva.com/). My research focuses on interpretable and explainable NLP, AI safety, reasoning, fairness, and robustness. My ultimate goal is to advance **safe** and **transparent** AI systems by deepening our understanding of black-box models.
+I'm currently a PhD candidate at the UNC-Chapel Hill where I am advised by [Shashank Srivastava](https://www.ssriva.com/). My research lies at the intersection of interpretability and AI safety. I combine black-box and white-box approaches to develop methods for monitoring LLM systems. My broader goal is to build **safer** and more **transparent** AI systems by deepening our understanding of how black-box models behave and what drives their behavior.
 
-Currently I'm a Student Researcher at Google DeepMind in NYC working with [Neha Kalibhat](https://sites.google.com/view/nehakalibhat) and [Mani Malek](http://manielec.com/). I spent my previous summer at [IFM MBZUAI Silicon Valley Lab](https://ifm.mbzuai.ac.ae/) with [Mikhail Yurochkin](https://moonfolk.github.io/). Before PhD, I earned my bachelor's degree from the Department of Computer Engineering Boğaziçi University, where my thesis advisor was [Pinar Yanardag](https://pinguar.org/).
+In summer 2026, I was a Student Researcher at Google DeepMind in New York, working with [Neha Kalibhat](https://sites.google.com/view/nehakalibhat) and [Mani Malek](http://manielec.com/). Previously, I interned at the [IFM MBZUAI Silicon Valley Lab](https://ifm.ai/) with [Mikhail Yurochkin](https://moonfolk.github.io/). Before my PhD, I earned my bachelor's degree from Boğaziçi University.
