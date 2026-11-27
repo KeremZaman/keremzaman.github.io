@@ -1,0 +1,8 @@
+{% assign post_text = include.post.content | default: include.post.feed_content | strip_html %}
+{% assign word_count = post_text | number_of_words %}
+{% assign reading_minutes = word_count | plus: 199 | divided_by: 200 | at_least: 1 %}
+<p class="blog-meta">
+  <time datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: '%B %-d, %Y' }}</time>
+  <span aria-hidden="true">&middot;</span> {{ reading_minutes }} min read
+  {% if include.post.external_source %}<span aria-hidden="true">&middot;</span> {{ include.post.external_source | escape }}{% endif %}
+</p>

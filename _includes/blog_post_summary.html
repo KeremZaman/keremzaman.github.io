@@ -1,0 +1,15 @@
+{% assign post = include.post %}
+{% assign post_url = post.url | relative_url %}
+{% if post.redirect %}
+  {% if post.redirect contains '://' %}
+    {% assign post_url = post.redirect %}
+  {% else %}
+    {% assign post_url = post.redirect | relative_url %}
+  {% endif %}
+{% endif %}
+<article class="blog-entry{% if include.featured %} blog-entry-featured{% endif %}">
+  {% if include.featured %}<p class="blog-eyebrow">Featured</p>{% endif %}
+  <h2><a href="{{ post_url }}">{{ post.title | escape }}</a></h2>
+  {% if post.description %}<p class="blog-entry-description">{{ post.description | escape }}</p>{% endif %}
+  {% include blog_post_meta.html post=post %}
+</article>

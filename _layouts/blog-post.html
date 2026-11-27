@@ -1,0 +1,36 @@
+---
+layout: default
+---
+<div class="post blog-article">
+  <nav class="blog-back" aria-label="Blog navigation"><a href="{{ '/blog/' | relative_url }}">All posts</a></nav>
+  {% if page.draft %}<p class="blog-draft-notice">Unpublished draft</p>{% endif %}
+  <header class="blog-article-header">
+    <h1>{{ page.title | escape }}</h1>
+    {% if page.description %}<p class="blog-deck">{{ page.description | escape }}</p>{% endif %}
+    {% include blog_post_meta.html post=page %}
+    {% if page.author %}<p class="blog-byline">{{ page.author | escape }}</p>{% endif %}
+  </header>
+
+  {% if page.toc and page.toc.beginning %}
+    <details class="blog-toc" open>
+      <summary>On this page</summary>
+      {% toc %}
+    </details>
+  {% endif %}
+
+  <article class="blog-body" id="markdown-content">{{ content }}</article>
+
+  {% if page.related_publications and page.related_publications.size > 0 %}
+    {% assign publications = page.related_publications | replace: ', ', ',' | split: ',' | join: '|' %}
+    <section class="blog-references" aria-labelledby="references-heading">
+      <h2 id="references-heading">References</h2>
+      <div class="publications">{% bibliography -f {{ site.scholar.bibliography }} -q @*[key^={{ publications }}]* %}</div>
+    </section>
+  {% endif %}
+
+  {% if site.related_blog_posts.enabled %}
+    {% unless page.related_posts == false %}{% include related_posts.html %}{% endunless %}
+  {% endif %}
+  {% if site.giscus.repo and page.giscus_comments %}{% include giscus.html %}{% endif %}
+  {% if site.disqus_shortname and page.disqus_comments %}{% include disqus.html %}{% endif %}
+</div>

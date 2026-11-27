@@ -123,8 +123,8 @@ bing_site_verification:  # out your bing-site-verification ID (Bing Webmaster)
 # -----------------------------------------------------------------------------
 
 blog_name: blog # blog_name will be displayed in your blog page
-blog_nav_title:  # your blog must have a title for it to be displayed in the nav bar
-blog_description: 
+blog_nav_title: blog
+blog_description: Notes on interpretability, AI safety, and research.
 permalink: /blog/:year/:title/
 
 # Pagination
@@ -208,6 +208,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor
+  - templates
 keep_files:
   - CNAME
   - .nojekyll
@@ -233,6 +234,11 @@ plugins:
 
 # Sitemap settings
 defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: blog-post
   - scope:
       path: "assets"
     values:
@@ -262,8 +268,8 @@ jekyll-archives:
     tag: '/blog/tag/:name/'
     category: '/blog/category/:name/'
 
-display_tags: ['formatting', 'images', 'links', 'math', 'code'] # these tags will be displayed on the front page of your blog
-display_categories: ['blockquotes'] # these categories will be displayed on the front page of your blog
+display_tags: []
+display_categories: []
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar

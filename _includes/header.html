@@ -51,25 +51,22 @@
                   {%- endif -%}
                 </a>
               </li>
-              {% if site.blog_nav_title %}
-              <!-- Blog -->
-              <li class="nav-item {% if page.url contains 'blog' %}active{% endif %}">
-                <a class="nav-link" href="{{ '/blog/' | relative_url }}">{{ site.blog_nav_title }}
-                  {%- if page.url contains 'blog' -%}
-                  <span class="sr-only">(current)</span>
-                  {%- endif -%}
-                </a>
-              </li>
-              {%- endif %}
-
               <!-- Other pages -->
               {%- assign sorted_pages = site.pages | sort: "nav_order" -%}
               {%- for p in sorted_pages -%}
               {%- if p.nav and p.autogen == nil -%}
+              {%- assign nav_active = false -%}
+              {%- if page.title == p.title -%}
+                {%- assign nav_active = true -%}
+              {%- elsif p.permalink == '/blog/' -%}
+                {%- if page.url contains '/blog/' -%}
+                  {%- assign nav_active = true -%}
+                {%- endif -%}
+              {%- endif -%}
               {%- if p.dropdown %}
-              <li class="nav-item dropdown {% if page.title == p.title %}active{% endif %}">
+              <li class="nav-item dropdown {% if nav_active %}active{% endif %}">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ p.title }}
-                  {%- if page.title == p.title -%}
+                  {%- if nav_active -%}
                   <span class="sr-only">(current)</span>
                   {%- endif -%}
                 </a>
@@ -84,9 +81,9 @@
                 </div>
               </li>
               {%- else %}
-              <li class="nav-item {% if page.title == p.title %}active{% endif %}">
+              <li class="nav-item {% if nav_active %}active{% endif %}">
                 <a class="nav-link" href="{{ p.url | relative_url }}">{{ p.title }}
-                  {%- if page.title == p.title -%}
+                  {%- if nav_active -%}
                   <span class="sr-only">(current)</span>
                   {%- endif -%}
                 </a>
